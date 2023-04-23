@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs https//pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id  Int       @id @default(autoincrement())
+  username String    @unique
+  hash     String
+  email    String?   @unique
+  posts    Post[]
+  likes    Like[]
+  dislikes Dislike[]
+  comments Comment[]
+}
+
+model Category {
+  category_id Int     @id @default(autoincrement())
+  name        String
+  topics      Topic[]
+}
+
+model Topic {
+  topic_id            Int      @id @default(autoincrement())
+  name                String
+  category            Category @relation(fields: [categoryCategory_id], references: [category_id])
+  posts               Post[]
+  categoryCategory_id Int
+}
+
+model Post {
+  post_id       Int       @id @default(autoincrement())
+  user          User      @relation(fields: [userUser_id], references: [user_id])
+  topic         Topic     @relation(fields: [topicTopic_id], references: [topic_id])
+  title         String
+  content       String
+  date_created  DateTime  @default(now())
+  comments      Comment[]
+  likes         Like[]
+  dislikes      Dislike[]
+  userUser_id   Int
+  topicTopic_id Int
+}
+
+model Comment {
+  comment_id   Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userUser_id], references: [user_id])
+  post         Post     @relation(fields: [postPost_id], references: [post_id])
+  content      String
+  date_created DateTime @default(now())
+  userUser_id  Int
+  postPost_id  Int
+}
+
+model Like {
+  like_id     Int  @id @default(autoincrement())
+  user        User @relation(fields: [userUser_id], references: [user_id])
+  post        Post @relation(fields: [postPost_id], references: [post_id])
+  userUser_id Int
+  postPost_id Int
+}
+
+model Dislike {
+  dislike_id  Int  @id @default(autoincrement())
+  user        User @relation(fields: [userUser_id], references: [user_id])
+  post        Post @relation(fields: [postPost_id], references: [post_id])
+  userUser_id Int
+  postPost_id Int
+}
