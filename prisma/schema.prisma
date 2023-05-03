@@ -24,13 +24,13 @@ model User {
 
 model Category {
   category_id Int     @id @default(autoincrement())
-  name        String
+  name        String  @unique
   topics      Topic[]
 }
 
 model Topic {
   topic_id            Int      @id @default(autoincrement())
-  name                String
+  name                String   @unique
   category            Category @relation(fields: [categoryCategory_id], references: [category_id])
   posts               Post[]
   categoryCategory_id Int
