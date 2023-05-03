@@ -38,21 +38,22 @@ export class AuthService{
             if (!isCorrect)
                 throw new ForbiddenException('Username or password is incorrect')
             
-            return this.signToken(user.user_id, user.username);
+            return this.signToken(user.user_id, user.username, user.isAdmin);
         } catch (error) {
             throw error
         }
     }
 
-    async signToken(userId: number, username: string) : Promise<{access_token: string}>{  
+    async signToken(userId: number, username: string, isAdmin: boolean) : Promise<{access_token: string}>{  
         const payload = {
             sub: userId,
-            username
+            username,
+            isAdmin
         }
         const secret = this.config.get('JWT_SECRET')
 
         const token = await this.jwt.signAsync(payload, {
-            expiresIn: '15m',
+            expiresIn: '5m',
             secret: secret
         })
 
