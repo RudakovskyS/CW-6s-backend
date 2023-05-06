@@ -21,11 +21,13 @@ export class CommentService {
         })
     }
 
-    async postComment(dto: CommentDto) {
+    async postComment(post_id: number, dto: CommentDto, user: any) {
+        user = JSON.parse(user);
+        
         const comment = await this.prisma.comment.create({
             data:{
-                userUser_id: +dto.user_id,
-                postPost_id: +dto.post_id,
+                userUser_id: +user.user_id,
+                postPost_id: +post_id,
                 content: dto.content
             }
         })

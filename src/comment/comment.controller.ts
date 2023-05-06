@@ -1,7 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
 import { CommentService } from './comment.service';
 import { CommentDto } from './dto';
+import { JwtGuard } from 'src/auth/guard';
 
+@UseGuards(JwtGuard)
 @Controller('api/comments')
 export class CommentController {
     constructor(private commentService: CommentService){}
@@ -16,9 +19,9 @@ export class CommentController {
         return this.commentService.getCommentsFromUser(params.id);
     }
 
-    @Post()
-    postComment(@Body() dto: CommentDto){
-        return this.commentService.postComment(dto);
+    @Post(':id')
+    postComment(@Param() params: any, @Body() dto: CommentDto, @Req() req: Request){
+        return this.commentService.postComment(params.id, dto, JSON.stringify(req.user));
     }
 
     @Delete(':id')
