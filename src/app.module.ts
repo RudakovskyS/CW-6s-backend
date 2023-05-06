@@ -8,6 +8,7 @@ import { TopicModule } from './topic/topic.module';
 import { PostModule } from './post/post.module';
 import { CommentModule } from './comment/comment.module';
 import { RateModule } from './rate/rate.module';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { RateModule } from './rate/rate.module';
     }),
     AuthModule, 
     UserModule, 
-    PrismaModule, CategoryModule, TopicModule, PostModule, CommentModule, RateModule,
+    PrismaModule, CategoryModule, TopicModule, PostModule, CommentModule, RateModule, QuizModule,
   ]
 })
 export class AppModule { }
