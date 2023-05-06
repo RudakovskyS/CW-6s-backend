@@ -11,11 +11,13 @@ datasource db {
 }
 
 model User {
-  user_id  Int       @id @default(autoincrement())
-  username String    @unique
-  hash     String
-  email    String?   @unique
-  isAdmin  Boolean   @default(false)
+  user_id         Int       @id @default(autoincrement())
+  username        String    @unique
+  hash            String
+  email           String?   @unique
+  isAdmin         Boolean   @default(false)
+  quizesTaken     QuizQuestion[]
+  correctAnswers  Int?
   posts    Post[]
   likes    Like[]
   dislikes Dislike[]
@@ -74,4 +76,19 @@ model Dislike {
   post        Post @relation(fields: [postPost_id], references: [post_id])
   userUser_id Int
   postPost_id Int
+}
+
+model QuizQuestion {
+  question_id Int     @id @default(autoincrement())
+  content     String
+  usersAnswered User[]
+  answers QuizAnswer[]
+}
+
+model QuizAnswer {
+  answer_id Int     @id @default(autoincrement())
+  content String
+  isCorrect Boolean
+  question QuizQuestion @relation(fields: [questionQuestion_id], references: [question_id])
+  questionQuestion_id Int
 }

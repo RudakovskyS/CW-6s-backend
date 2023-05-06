@@ -17,7 +17,7 @@ export class CommentService {
         return await this.prisma.comment.findMany({
             where: {
                 userUser_id: +id
-            }
+            },
         })
     }
 

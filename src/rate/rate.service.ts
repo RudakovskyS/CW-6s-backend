@@ -7,17 +7,31 @@ export class RateService {
     constructor(private prisma: PrismaService){}
 
     async getPostLikes(id: number) {
-        return await this.prisma.like.count({
+        return await this.prisma.like.findMany({
             where: {
                 postPost_id: +id
+            },
+            select: {
+                user: {
+                    select: { 
+                        username: true
+                    }
+                }
             }
         })
     }
     
     async getPostDislikes(id: any) {
-        return await this.prisma.dislike.count({
+        return await this.prisma.dislike.findMany({
             where: {
                 postPost_id: +id
+            },
+            select: {
+                user: {
+                    select: { 
+                        username: true
+                    }
+                }
             }
         })
     }
@@ -56,13 +70,13 @@ export class RateService {
     }
 
     async checkIfPostDislikedByUser(post_id: number, user_id: number) {
-        const likes = await this.prisma.dislike.count({
+        const dislikes = await this.prisma.dislike.count({
             where: {
                 postPost_id: +post_id,
                 userUser_id: +user_id
             }
         });
-      return likes;  
+      return dislikes;
     }
 
 }
