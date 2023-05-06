@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { RatePostDto } from 'src/post/dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -36,24 +35,26 @@ export class RateService {
         })
     }
     
-    async likePost(id: number, dto: RatePostDto) {
-        if (await this.checkIfPostLikedByUser(+id, +dto.user_id) == 0 && await this.checkIfPostDislikedByUser(+id, +dto.user_id) == 0) {
+    async likePost(id: number, user: any) {
+        user = JSON.parse(user);
+        if (await this.checkIfPostLikedByUser(+id, +user.user_id) == 0 && await this.checkIfPostDislikedByUser(+id, +user.user_id) == 0) {
             return this.prisma.like.create({
                 data: {
                     postPost_id: +id,
-                    userUser_id: dto.user_id
+                    userUser_id: user.user_id
                 }
             })
         }
         return
     }
     
-    async dislikePost(id: number, dto: RatePostDto) {
-        if (await this.checkIfPostLikedByUser(id, dto.user_id) == 0 && await this.checkIfPostDislikedByUser(id, dto.user_id) == 0) {
+    async dislikePost(id: number, user: any) {
+        user = JSON.parse(user);
+        if (await this.checkIfPostLikedByUser(id, user.user_id) == 0 && await this.checkIfPostDislikedByUser(id, user.user_id) == 0) {
             return this.prisma.dislike.create({
                 data: {
                     postPost_id: +id,
-                    userUser_id: dto.user_id
+                    userUser_id: user.user_id
                 }
             })
         }

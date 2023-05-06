@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { QuizService } from './quiz.service';
+import { Request } from 'express';
 import { CreateQuizDto, GiveAnswerDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
 

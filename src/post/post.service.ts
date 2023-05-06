@@ -23,13 +23,14 @@ export class PostService {
         })
     }
 
-    async postPost(dto: PostDto) {
+    async postPost(dto: PostDto, user: any) {
+        user = JSON.parse(user);
         const post = await this.prisma.post.create(
             {
                 data: {
                     title: dto.title,
                     content: dto.content,
-                    userUser_id: +dto.user_id,
+                    userUser_id: +user.user_id,
                     topicTopic_id: +dto.topic_id
                 }
             }

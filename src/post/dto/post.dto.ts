@@ -8,10 +8,6 @@ export class PostDto{
     @IsString()
     @IsNotEmpty()
     content: string;
-
-    @IsNumber()
-    @IsNotEmpty()
-    user_id: number;
     
     @IsNumber()
     @IsNotEmpty()

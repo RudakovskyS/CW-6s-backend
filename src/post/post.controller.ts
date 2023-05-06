@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
 import { JwtGuard } from 'src/auth/guard';
 import { PostService } from './post.service';
-import { PostDto, RatePostDto } from './dto';
+import { PostDto } from './dto';
 import { RateService } from 'src/rate/rate.service';
 
 @UseGuards(JwtGuard)
@@ -20,8 +21,8 @@ export class PostController {
     }
 
     @Post()
-    postPost(@Body() dto: PostDto){
-        return this.postService.postPost(dto)
+    postPost(@Body() dto: PostDto, @Req() req: Request){
+        return this.postService.postPost(dto, JSON.stringify(req.user))
     }
 
     @Delete(":id")
@@ -30,12 +31,12 @@ export class PostController {
     }
 
     @Post(':id/like')
-    likePost(@Param() params: any, @Body() dto: RatePostDto){
-        return this.rateService.likePost(params.id, dto)
+    likePost(@Param() params: any, @Req() req: Request){
+        return this.rateService.likePost(params.id, JSON.stringify(req.user))
     }
 
     @Post(':id/dislike')
-    dislikePost(@Param() params: any, @Body() dto: RatePostDto){
-        return this.rateService.dislikePost(params.id, dto)
+    dislikePost(@Param() params: any, @Req() req: Request){
+        return this.rateService.dislikePost(params.id, JSON.stringify(req.user))
     }
 }
