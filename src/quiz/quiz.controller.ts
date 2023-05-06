@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { QuizService } from './quiz.service';
-import { CreateQuizDto } from './dto';
+import { CreateQuizDto, GiveAnswerDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
 
 @UseGuards(JwtGuard)
@@ -25,6 +25,11 @@ export class QuizController {
 
     @Post()
     createQuiz(@Body() dto: CreateQuizDto){
-        return this.quizService.createQuiz(dto)
+        return this.quizService.createQuiz(dto);
+    }
+    
+    @Post(':id/answer')
+    giveAnswer(@Param() params: any, @Body() dto: GiveAnswerDto){
+        return this.quizService.giveAnswer(params.id, dto);
     }
 }

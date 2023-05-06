@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateQuizDto } from './dto';
+import { CreateQuizDto, GiveAnswerDto } from './dto';
 
 @Injectable()
 export class QuizService {
@@ -54,5 +54,50 @@ export class QuizService {
                 })
             }
         });
+    }
+
+    async checkAnswer(question_id: number, answer: string){
+        return this.prisma.quizAnswer.findFirst({
+            where: {
+                questionQuestion_id: +question_id,
+                content: answer,
+            },
+            select: {
+                isCorrect: true
+            }
+        })
+    }
+
+    async giveAnswer(id: number, dto: GiveAnswerDto) {
+        const currentQuestion = await this.getQuizById(id)
+        
+        const currentUser = await this.prisma.user.update({
+                where: {
+                    user_id: dto.user_id
+                },
+                data: {
+                    quizesTaken: {
+                        increment: 1
+                    }
+                }
+            })
+
+        const result = await this.checkAnswer(currentQuestion.question_id, dto.answer)
+
+        if (result.isCorrect){
+            await this.prisma.user.update({
+                where: {
+                    user_id: dto.user_id
+                },
+                data: {
+                    correctAnswers: {
+                        increment: 1
+                    }
+                }
+                
+            })
+        }
+
+        return result
     }
 }

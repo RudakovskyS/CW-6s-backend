@@ -16,8 +16,8 @@ model User {
   hash            String
   email           String?   @unique
   isAdmin         Boolean   @default(false)
-  quizesTaken     QuizQuestion[]
-  correctAnswers  Int?
+  quizesTaken     Int       @default(0)
+  correctAnswers  Int       @default(0)
   posts    Post[]
   likes    Like[]
   dislikes Dislike[]
@@ -81,7 +81,6 @@ model Dislike {
 model QuizQuestion {
   question_id Int     @id @default(autoincrement())
   content     String
-  usersAnswered User[]
   answers QuizAnswer[]
 }
 
