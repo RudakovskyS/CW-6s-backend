@@ -49,8 +49,7 @@ export class DictionaryService {
                 return data;
             })
             .catch((error) => {
-                console.error(error);
-                return null;
+                return {info: "Cannot find the word in the dictionary"}
             });
     }
 }

@@ -9,7 +9,11 @@ export class CategoryService {
     }
 
     async getCategories() {
-        return await this.prisma.category.findMany();
+        return await this.prisma.category.findMany({
+            include: {
+                topics: true
+            }
+        });
     }
 
     async postCategory(dto: CategoryDto) {

@@ -3,7 +3,6 @@ import { JwtGuard } from 'src/auth/guard';
 import { TopicService } from './topic.service';
 import { TopicDto } from './dto';
 
-@UseGuards(JwtGuard)
 @Controller('api/topics')
 export class TopicController {
     constructor(private topicService: TopicService) {}
@@ -18,6 +17,7 @@ export class TopicController {
         return this.topicService.getCategoryTopics(param.id);
     }
 
+    @UseGuards(JwtGuard)
     @Post(':id')
     postCategoryTopic(@Param() param: any, @Body() dto: TopicDto){
         return this.topicService.postTopic(param.id, dto);
@@ -28,6 +28,7 @@ export class TopicController {
         return this.topicService.getTopic(param.id);
     }
 
+    @UseGuards(JwtGuard)
     @Delete(':id')
     deleteTopic(@Param() param: any){
         return this.topicService.deleteTopic(param.id);

@@ -4,7 +4,6 @@ import { CommentService } from './comment.service';
 import { CommentDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
 
-@UseGuards(JwtGuard)
 @Controller('api/comments')
 export class CommentController {
     constructor(private commentService: CommentService){}
@@ -19,11 +18,13 @@ export class CommentController {
         return this.commentService.getCommentsFromUser(params.id);
     }
 
+    @UseGuards(JwtGuard)
     @Post(':id')
     postComment(@Param() params: any, @Body() dto: CommentDto, @Req() req: Request){
         return this.commentService.postComment(params.id, dto, JSON.stringify(req.user));
     }
 
+    @UseGuards(JwtGuard)
     @Delete(':id')
     deletePost(@Param() params: any){
         return this.commentService.deleteComment(params.id);
