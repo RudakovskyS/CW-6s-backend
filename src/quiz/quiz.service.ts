@@ -68,12 +68,13 @@ export class QuizService {
         })
     }
 
-    async giveAnswer(id: number, dto: GiveAnswerDto) {
+    async giveAnswer(id: number, dto: GiveAnswerDto, user: any) {
+        user = JSON.parse(user);
         const currentQuestion = await this.getQuizById(id)
         
         const currentUser = await this.prisma.user.update({
                 where: {
-                    user_id: dto.user_id
+                    user_id: user.user_id
                 },
                 data: {
                     quizesTaken: {
@@ -87,7 +88,7 @@ export class QuizService {
         if (result.isCorrect){
             await this.prisma.user.update({
                 where: {
-                    user_id: dto.user_id
+                    user_id: user.user_id
                 },
                 data: {
                     correctAnswers: {

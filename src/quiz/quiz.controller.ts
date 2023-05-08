@@ -30,7 +30,7 @@ export class QuizController {
     }
     
     @Post(':id/answer')
-    giveAnswer(@Param() params: any, @Body() dto: GiveAnswerDto){
-        return this.quizService.giveAnswer(params.id, dto);
+    giveAnswer(@Param() params: any, @Body() dto: GiveAnswerDto, @Req() req: Request){
+        return this.quizService.giveAnswer(params.id, dto, JSON.stringify(req.user));
     }
 }
