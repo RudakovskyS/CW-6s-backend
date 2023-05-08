@@ -9,6 +9,7 @@ import { PostModule } from './post/post.module';
 import { CommentModule } from './comment/comment.module';
 import { RateModule } from './rate/rate.module';
 import { QuizModule } from './quiz/quiz.module';
+import { DictionaryModule } from './dictionary/dictionary.module';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { QuizModule } from './quiz/quiz.module';
     }),
     AuthModule, 
     UserModule, 
-    PrismaModule, CategoryModule, TopicModule, PostModule, CommentModule, RateModule, QuizModule,
+    PrismaModule, CategoryModule, TopicModule, PostModule, CommentModule, RateModule, QuizModule, DictionaryModule,
   ]
 })
 export class AppModule { }
