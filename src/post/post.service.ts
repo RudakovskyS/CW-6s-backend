@@ -4,6 +4,19 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class PostService {
+    async getAllPosts() {
+        return await this.prisma.post.findMany({
+            include: {
+                user: true,
+                topic: true,
+                likes: true,
+                dislikes: true
+            },
+            orderBy:{
+                date_created: "desc"
+            }
+        });
+    }
     constructor(private prisma: PrismaService) { }
 
     async getPostsByTopic(id: number) {

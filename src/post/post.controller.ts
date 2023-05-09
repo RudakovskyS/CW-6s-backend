@@ -9,6 +9,11 @@ import { RateService } from 'src/rate/rate.service';
 export class PostController {
     constructor(private postService: PostService, private rateService: RateService){}
 
+    @Get()
+    getAllPosts(){
+        return this.postService.getAllPosts()
+    }
+
     @Get("topic/:id")
     getPostsByTopic(@Param() params: any){
         return this.postService.getPostsByTopic(params.id)
