@@ -10,7 +10,8 @@ export class PostService {
                 user: true,
                 topic: true,
                 likes: true,
-                dislikes: true
+                dislikes: true,
+                comments: true
             },
             orderBy:{
                 date_created: "desc"
