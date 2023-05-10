@@ -10,6 +10,12 @@ export class CommentService {
         return await this.prisma.comment.findMany({
             where: {
                 postPost_id: +id
+            },
+            include: {
+                user: true
+            },
+            orderBy:{
+                date_created: "desc"
             }
         })
     }
@@ -18,6 +24,10 @@ export class CommentService {
             where: {
                 userUser_id: +id
             },
+            include: {
+                user: true,
+                post: true
+            }
         })
     }
 

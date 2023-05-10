@@ -14,6 +14,11 @@ export class PostController {
         return this.postService.getAllPosts()
     }
 
+    @Get(':id')
+    getPost(@Param() params: any){
+        return this.postService.getPost(params.id)
+    }
+
     @Get("topic/:id")
     getPostsByTopic(@Param() params: any){
         return this.postService.getPostsByTopic(params.id)

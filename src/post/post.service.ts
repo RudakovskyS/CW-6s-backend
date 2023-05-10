@@ -4,6 +4,20 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class PostService {
+    async getPost(id: number) {
+        return await this.prisma.post.findFirst({
+            include: {
+                user: true,
+                topic: true,
+                likes: true,
+                dislikes: true,
+                comments: true,
+            },
+            where: {
+                post_id: +id
+            }
+        }); 
+    }
     async getAllPosts() {
         return await this.prisma.post.findMany({
             include: {
@@ -22,10 +36,20 @@ export class PostService {
 
     async getPostsByTopic(id: number) {
         return await this.prisma.post.findMany(
-            {
+            {   
+                include: {
+                    user: true,
+                    topic: true,
+                    likes: true,
+                    dislikes: true,
+                    comments: true
+                },
                 where: {
                     topicTopic_id: +id
                 },
+                orderBy:{
+                    date_created: "desc"
+                }
             })
     }
 
@@ -34,6 +58,16 @@ export class PostService {
             where: {
                 userUser_id: +id
             },
+            include: {
+                user: true,
+                topic: true,
+                likes: true,
+                dislikes: true,
+                comments: true
+            },
+            orderBy:{
+                date_created: "desc"
+            }
         })
     }
 
