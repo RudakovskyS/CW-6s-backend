@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { DictionaryService } from './dictionary.service';
 import { DictionaryDto } from './dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -8,7 +8,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class DictionaryController {
     constructor (private dictionaryService: DictionaryService){}
 
-    @Get()
+    @Post()
     findDefinition(@Body() dto: DictionaryDto){
         return this.dictionaryService.findDefinition(dto)
     }
