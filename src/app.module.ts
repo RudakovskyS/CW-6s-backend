@@ -11,6 +11,7 @@ import { RateModule } from './rate/rate.module';
 import { QuizModule } from './quiz/quiz.module';
 import { DictionaryModule } from './dictionary/dictionary.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({

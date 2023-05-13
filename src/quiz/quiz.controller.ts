@@ -3,9 +3,11 @@ import { QuizService } from './quiz.service';
 import { Request } from 'express';
 import { CreateQuizDto, GiveAnswerDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(JwtGuard)
 @Controller('api/quiz')
+@ApiTags('api/quiz')
 export class QuizController {
     constructor (private quizService: QuizService){}
 

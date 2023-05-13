@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/c
 import { JwtGuard } from 'src/auth/guard';
 import { TopicService } from './topic.service';
 import { TopicDto } from './dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('api/topics')
+@ApiTags('api/topics')
 export class TopicController {
     constructor(private topicService: TopicService) {}
 

@@ -3,8 +3,10 @@ import { Request } from 'express';
 import { CommentService } from './comment.service';
 import { CommentDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('api/comments')
+@ApiTags('api/comments')
 export class CommentController {
     constructor(private commentService: CommentService){}
 

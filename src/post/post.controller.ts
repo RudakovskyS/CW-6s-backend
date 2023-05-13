@@ -4,8 +4,10 @@ import { JwtGuard } from 'src/auth/guard';
 import { PostService } from './post.service';
 import { PostDto } from './dto';
 import { RateService } from 'src/rate/rate.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('api/posts')
+@ApiTags('api/posts')
 export class PostController {
     constructor(private postService: PostService, private rateService: RateService){}
 
