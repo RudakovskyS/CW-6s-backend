@@ -24,7 +24,8 @@ export class UserService {
                 likes: true,
                 dislikes: true,
                 quizesTaken: true,
-                correctAnswers: true
+                correctAnswers: true,
+                comments: true
             }
         })
     }
