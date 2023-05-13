@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UserService {
+    
     constructor(private prisma: PrismaService){}
 
     getUserStats(user: string) {
@@ -11,5 +12,20 @@ export class UserService {
         return {
             percentage: (userJson.correctAnswers / userJson.quizesTaken) * 100
         }
+    }
+
+    getUser(id: number) {
+        return this.prisma.user.findFirst({
+            where: {
+                user_id: +id
+            },
+            select: {
+                username: true,
+                likes: true,
+                dislikes: true,
+                quizesTaken: true,
+                correctAnswers: true
+            }
+        })
     }
 }
