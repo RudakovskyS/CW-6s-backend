@@ -33,15 +33,15 @@ model Category {
 model Topic {
   topic_id            Int      @id @default(autoincrement())
   name                String   @unique
-  category            Category @relation(fields: [categoryCategory_id], references: [category_id])
+  category            Category @relation(fields: [categoryCategory_id], references: [category_id], onDelete: Cascade)
   posts               Post[]
   categoryCategory_id Int
 }
 
 model Post {
   post_id       Int       @id @default(autoincrement())
-  user          User      @relation(fields: [userUser_id], references: [user_id])
-  topic         Topic     @relation(fields: [topicTopic_id], references: [topic_id])
+  user          User      @relation(fields: [userUser_id], references: [user_id], onDelete: Cascade)
+  topic         Topic     @relation(fields: [topicTopic_id], references: [topic_id], onDelete: Cascade)
   title         String
   content       String
   date_created  DateTime  @default(now())
@@ -54,8 +54,8 @@ model Post {
 
 model Comment {
   comment_id   Int      @id @default(autoincrement())
-  user         User     @relation(fields: [userUser_id], references: [user_id])
-  post         Post     @relation(fields: [postPost_id], references: [post_id])
+  user         User     @relation(fields: [userUser_id], references: [user_id], onDelete: Cascade)
+  post         Post     @relation(fields: [postPost_id], references: [post_id], onDelete: Cascade)
   content      String
   date_created DateTime @default(now())
   userUser_id  Int
@@ -64,16 +64,16 @@ model Comment {
 
 model Like {
   like_id     Int  @id @default(autoincrement())
-  user        User @relation(fields: [userUser_id], references: [user_id])
-  post        Post @relation(fields: [postPost_id], references: [post_id])
+  user        User @relation(fields: [userUser_id], references: [user_id], onDelete: Cascade)
+  post        Post @relation(fields: [postPost_id], references: [post_id], onDelete: Cascade)
   userUser_id Int
   postPost_id Int
 }
 
 model Dislike {
   dislike_id  Int  @id @default(autoincrement())
-  user        User @relation(fields: [userUser_id], references: [user_id])
-  post        Post @relation(fields: [postPost_id], references: [post_id])
+  user        User @relation(fields: [userUser_id], references: [user_id], onDelete: Cascade)
+  post        Post @relation(fields: [postPost_id], references: [post_id], onDelete: Cascade)
   userUser_id Int
   postPost_id Int
 }
@@ -88,6 +88,6 @@ model QuizAnswer {
   answer_id Int     @id @default(autoincrement())
   content String
   isCorrect Boolean
-  question QuizQuestion @relation(fields: [questionQuestion_id], references: [question_id])
+  question QuizQuestion @relation(fields: [questionQuestion_id], references: [question_id], onDelete: Cascade)
   questionQuestion_id Int
 }
