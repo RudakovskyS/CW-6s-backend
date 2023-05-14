@@ -24,8 +24,7 @@ export class QuizService {
     }
 
     async getRandomQuiz() {
-        const allRows = await (await this.getAllQuizes()).sort(() => Math.random() - 0.5);
-
+        const allRows = (await this.getAllQuizes()).sort(() => Math.random() - 0.5);
         return allRows[0];
     }
 

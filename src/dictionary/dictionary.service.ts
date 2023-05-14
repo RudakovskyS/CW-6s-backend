@@ -3,10 +3,15 @@ import { DictionaryDto } from './dto';
 
 @Injectable()
 export class DictionaryService {
+
     async findDefinition(dto: DictionaryDto) {
-        const article = await this.getJsonFromDictionary(dto.word)
-        const content = this.parseDefinitionsFromContent(article.Content)
-        return {definitions: content}
+        try{
+            const article = await this.getJsonFromDictionary(dto.word)
+            const content = this.parseDefinitionsFromContent(article.Content)
+            return {definitions: content}
+        } catch (error){
+            return {definitions: ['нічога не знойдзена па вашым запыце :(']}
+        }
     }
 
     parseDefinitionsFromContent(content) {
