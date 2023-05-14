@@ -90,4 +90,5 @@ model QuizAnswer {
   isCorrect Boolean
   question QuizQuestion @relation(fields: [questionQuestion_id], references: [question_id], onDelete: Cascade)
   questionQuestion_id Int
+  @@unique([questionQuestion_id, content])
 }

@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateQuizDto, GiveAnswerDto } from './dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class QuizService {
-    constructor(private prisma: PrismaService){}
+    constructor(private prisma: PrismaService) { }
 
     getAllQuizes() {
         return this.prisma.quizQuestion.findMany({
@@ -13,7 +14,7 @@ export class QuizService {
             }
         })
     }
-    
+
     getQuizById(id: number) {
         return this.prisma.quizQuestion.findFirst({
             where: {
@@ -34,8 +35,8 @@ export class QuizService {
                 content: dto.question
             }
         })
-        
-        dto.answers.forEach(async (answer, index) => {
+
+        dto.answers.forEach(async (answer?, index?) => {
             if (index == 0) {
                 await this.prisma.quizAnswer.create({
                     data: {
@@ -44,19 +45,29 @@ export class QuizService {
                         isCorrect: true
                     },
                 })
-            } else { 
-                await this.prisma.quizAnswer.create({
-                    data: {
-                        questionQuestion_id: new_question.question_id,
-                        content: answer,
-                        isCorrect: false
-                    },
-                })
+            } else {
+                try {
+                    await this.prisma.quizAnswer.create({
+                        data: {
+                            questionQuestion_id: new_question.question_id,
+                            content: answer,
+                            isCorrect: false
+                        },
+                    })
+                } catch (error) {
+                    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+                        console.log('duplication ignored');
+
+                    } else {
+                        console.error('Error creating model:', error);
+                    }
+
+                }
             }
         });
     }
 
-    async checkAnswer(question_id: number, answer: string){
+    async checkAnswer(question_id: number, answer: string) {
         return this.prisma.quizAnswer.findFirst({
             where: {
                 questionQuestion_id: +question_id,
@@ -71,21 +82,21 @@ export class QuizService {
     async giveAnswer(id: number, dto: GiveAnswerDto, user: any) {
         user = JSON.parse(user);
         const currentQuestion = await this.getQuizById(id)
-        
+
         const currentUser = await this.prisma.user.update({
-                where: {
-                    user_id: user.user_id
-                },
-                data: {
-                    quizesTaken: {
-                        increment: 1
-                    }
+            where: {
+                user_id: user.user_id
+            },
+            data: {
+                quizesTaken: {
+                    increment: 1
                 }
-            })
+            }
+        })
 
         const result = await this.checkAnswer(currentQuestion.question_id, dto.answer)
 
-        if (result.isCorrect){
+        if (result.isCorrect) {
             await this.prisma.user.update({
                 where: {
                     user_id: user.user_id
@@ -95,7 +106,7 @@ export class QuizService {
                         increment: 1
                     }
                 }
-                
+
             })
         }
 

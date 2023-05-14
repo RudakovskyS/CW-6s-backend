@@ -28,7 +28,8 @@ export class QuizController {
 
     @Post()
     createQuiz(@Body() dto: CreateQuizDto){
-        return this.quizService.createQuiz(dto);
+        return this.quizService.createQuiz(dto)
+        ;
     }
     
     @Post(':id/answer')
