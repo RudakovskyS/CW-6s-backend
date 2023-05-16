@@ -10,7 +10,8 @@ import { CommentModule } from './comment/comment.module';
 import { RateModule } from './rate/rate.module';
 import { QuizModule } from './quiz/quiz.module';
 import { DictionaryModule } from './dictionary/dictionary.module';
-
+import { ChatModule } from './chat/chat.module';
+import { ChatGateway } from './chat/chat.gateway';
 
 @Module({
   imports: [
@@ -20,6 +21,8 @@ import { DictionaryModule } from './dictionary/dictionary.module';
     AuthModule, 
     UserModule, 
     PrismaModule, CategoryModule, TopicModule, PostModule, CommentModule, RateModule, QuizModule, DictionaryModule,
-  ]
+    ChatModule
+  ],
+  providers: [ChatGateway]
 })
 export class AppModule { }

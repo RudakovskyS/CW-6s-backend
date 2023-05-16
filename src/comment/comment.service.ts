@@ -15,7 +15,7 @@ export class CommentService {
                 user: true
             },
             orderBy:{
-                date_created: "desc"
+                date_created: "asc"
             }
         })
     }
