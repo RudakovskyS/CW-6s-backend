@@ -14,7 +14,6 @@ model User {
   user_id         Int       @id @default(autoincrement())
   username        String    @unique
   hash            String
-  email           String?   @unique
   isAdmin         Boolean   @default(false)
   quizesTaken     Int       @default(0)
   correctAnswers  Int       @default(0)

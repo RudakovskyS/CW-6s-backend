@@ -4,36 +4,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class RateService {
     constructor(private prisma: PrismaService){}
-
-    async getPostLikes(id: number) {
-        return await this.prisma.like.findMany({
-            where: {
-                postPost_id: +id
-            },
-            select: {
-                user: {
-                    select: { 
-                        username: true
-                    }
-                }
-            }
-        })
-    }
-    
-    async getPostDislikes(id: any) {
-        return await this.prisma.dislike.findMany({
-            where: {
-                postPost_id: +id
-            },
-            select: {
-                user: {
-                    select: { 
-                        username: true
-                    }
-                }
-            }
-        })
-    }
     
     async likePost(id: number, user: any) {
         user = JSON.parse(user);

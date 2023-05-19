@@ -10,6 +10,11 @@ export class DictionaryController {
 
     @Post()
     findDefinition(@Body() dto: DictionaryDto){
-        return this.dictionaryService.findDefinition(dto)
+        try {
+            return this.dictionaryService.findDefinition(dto)
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 }

@@ -12,23 +12,43 @@ export class CommentController {
 
     @Get('post/:id')
     getCommentsFromPost(@Param() params: any){
-        return this.commentService.getCommentsFromPost(params.id);
+        try {
+            return this.commentService.getCommentsFromPost(params.id);
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 
     @Get('user/:id')
     getCommentsFromUser(@Param() params: any){
-        return this.commentService.getCommentsFromUser(params.id);
+        try {
+            return this.commentService.getCommentsFromUser(params.id);
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 
     @UseGuards(JwtGuard)
     @Post(':id')
     postComment(@Param() params: any, @Body() dto: CommentDto, @Req() req: Request){
-        return this.commentService.postComment(params.id, dto, JSON.stringify(req.user));
+        try {
+            return this.commentService.postComment(params.id, dto, JSON.stringify(req.user));
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 
     @UseGuards(JwtGuard)
     @Delete(':id')
     deletePost(@Param() params: any){
-        return this.commentService.deleteComment(params.id);
+        try {
+            return this.commentService.deleteComment(params.id);
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 }

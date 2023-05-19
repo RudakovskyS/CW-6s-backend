@@ -10,20 +10,13 @@ import { ApiTags } from '@nestjs/swagger';
 export class UserController {
     constructor (private userService: UserService){}
 
-    @UseGuards(JwtGuard)
-    @Get("me")
-    getMe(@Req() req: Request){
-        return req.user
-    }
-
-    @UseGuards(JwtGuard)
-    @Get('me/stats')
-    getMyStats(@Req() req: Request){
-        return this.userService.getUserStats(JSON.stringify(req.user));
-    }
-
     @Get(':id')
     getUser(@Param() params: any){
-        return this.userService.getUser(params.id)
+        try {
+            return this.userService.getUser(params.id)
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 }

@@ -11,24 +11,40 @@ export class CategoryController {
 
     @Get()
     getCategories(){
-        return this.categoryService.getCategories();
+        try {
+            return this.categoryService.getCategories();
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     @UseGuards(JwtGuard)
     @Post()
     postCategory(@Body() dto: CategoryDto) {
-        return this.categoryService.postCategory(dto);
+        try {
+            return this.categoryService.postCategory(dto);   
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     @Get(":id")
     getCategory(@Param() params: any){
-        return this.categoryService.getCategory(params.id);
+        try {
+            return this.categoryService.getCategory(params.id);
+        } catch (err) {
+            console.log(err)
+        }
     }
     
     @UseGuards(JwtGuard)
     @Delete(":id")
     deleteCategory(@Param() params: any){
-        return this.categoryService.deleteCategory(params.id);
+        try {
+            return this.categoryService.deleteCategory(params.id);
+        } catch (err) {
+            console.log(err)
+        }
     }
 
 }
