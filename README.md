@@ -1,7 +1,7 @@
 ## CW-6s-backend
 
 This is a backend application for my course project
-It's made with Angular and usage of Angular Material
+It's made with Nest.js
 
 to run the application on adress `https://localhost:3000` use `npm run start:dev`
 
