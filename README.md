@@ -3,8 +3,8 @@
 This is a backend application for my course project
 It's made with Nest.js
 
-to run the application on adress `https://localhost:3000` use `npm run start:dev`
-to find the endpoints documentation adress [Swagger Documentation](https://localhost:3000/api#/api)
+to run the application on adress `https://localhost:3000` use `npm run start:dev`.
+To find the endpoints documentation adress `https://localhost:3000/api`
 
 Here is the [frontend](https://github.com/RudakovskyS/CW-6s-frontend).
 
